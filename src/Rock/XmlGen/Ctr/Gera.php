@@ -21,15 +21,15 @@ class XmlGen_Ctr_Gera implements Rock_Core_IController
         $this->proj = preg_replace('[^A-z0-9]', '', $this->proj);
         $this->proj = ucfirst($this->proj);
         $this->dirOut = getcwd() . '/XmlGen/out';
-        $this->projClassPrefix = 'Xmlt_' . $this->proj . '_';
+        $this->projClassPrefix = 'Rock_Xmlt_' . $this->proj . '_';
         Fst_Deltree::cleanDir($this->dirOut);
         $this->preparaDir();
-        $arrayXml = Xmlt_XmlToArray::createArray($xml);
+        $arrayXml = Rock_Xmlt_XmlToArray::createArray($xml);
         $this->recursive($arrayXml);
-        new Fst_Zip($this->dirOut, $this->dirOut . '/Xmlt_' . $this->proj . '.zip');
+        new Fst_Zip($this->dirOut, $this->dirOut . '/Rock_Xmlt_' . $this->proj . '.zip');
         $vl = Rock_Core_ViewLoader::getInstance();
         $vl->load('Gera', array(
-            'proj' => 'Xmlt_' . $this->proj
+            'proj' => 'Rock_Xmlt_' . $this->proj
         ));
     }
 
@@ -50,7 +50,7 @@ class XmlGen_Ctr_Gera implements Rock_Core_IController
     {
         foreach ($array as $k => $v) {
             if (is_array($v)) {
-                if (Xmlt_ArrayToClass::checkArrayIntChild($v)) {
+                if (Rock_Xmlt_ArrayToClass::checkArrayIntChild($v)) {
                     $className = $this->projClassPrefix . ucfirst($k);
                     $arrayTmp = array(
                         $k => $v[0]
@@ -67,7 +67,7 @@ class XmlGen_Ctr_Gera implements Rock_Core_IController
 
     private function writeClass($fileName, array $array)
     {
-        $arrayToClass = new Xmlt_ArrayToClass($this->projClassPrefix . $fileName, $array);
+        $arrayToClass = new Rock_Xmlt_ArrayToClass($this->projClassPrefix . $fileName, $array);
         $path = $this->dirOut . '/Xmlt/' . $this->proj . '/';
         $filename = $path . $fileName . '.php';
         file_put_contents($filename, $arrayToClass->getPhpClass());

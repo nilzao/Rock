@@ -38,7 +38,7 @@ class Rock_DbtGen_Ctr_Gera implements Rock_Core_IController
             $this->writeDao($t);
             $this->writeEntity($t);
         }
-        new Fst_Zip($this->dirOut, $this->dirOut . '/dbt.zip');
+        new Rock_Fst_Zip($this->dirOut, $this->dirOut . '/dbt.zip');
         $vl = Rock_Core_ViewLoader::getInstance();
         $vl->load('Gera');
     }
@@ -52,7 +52,7 @@ class Rock_DbtGen_Ctr_Gera implements Rock_Core_IController
 
     private function prepareDir(Rock_DbtGen_Model_Structure $db)
     {
-        Fst_Deltree::cleanDir($this->dirOut . '/');
+        Rock_Fst_Deltree::cleanDir($this->dirOut . '/');
         $dbProj = ucfirst($this->snakeToCamel($db->getDbproj()));
         $path = $this->dirOut . '/' . $dbProj;
         $this->createDir($path . '/Dao/Gen');

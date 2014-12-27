@@ -17,15 +17,15 @@ class Rock_RockGen_Ctr_Gera implements Rock_Core_IController
 
     public function handle()
     {
-        Fst_Deltree::cleanDir($this->dirOut);
+        Rock_Fst_Deltree::cleanDir($this->dirOut);
         $input = Rock_Core_Input::getInstance();
         $this->vendor = $input->getRequest('vendor');
         $this->vendor = ucfirst($this->vendor);
-        Fst_CopyRecursive::copy($this->dirTemplate, $this->dirOut);
+        Rock_Fst_CopyRecursive::copy($this->dirTemplate, $this->dirOut);
         $this->replace($this->dirOut);
         rename($this->dirOut . '/RockGen', $this->dirOut . '/' . $this->vendor);
         rename($this->dirOut . '/rockgen.php', $this->dirOut . '/' . strtolower($this->vendor) . '.php');
-        new Fst_Zip($this->dirOut, $this->dirOut . '/' . $this->vendor . '.zip');
+        new Rock_Fst_Zip($this->dirOut, $this->dirOut . '/' . $this->vendor . '.zip');
         $vl = Rock_Core_ViewLoader::getInstance();
         $vl->load('Gera', array(
             'vendor' => $this->vendor
