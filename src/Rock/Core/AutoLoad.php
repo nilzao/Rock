@@ -5,7 +5,7 @@ class Rock_Core_AutoLoad
 
     public static function loadClass($className)
     {
-        $file = dirname(dirname(__FILE__));
+        $file = dirname(dirname(dirname(__FILE__)));
         $filename = $file . '/' . str_replace('_', '/', $className) . '.php';
         if (is_file($filename)) {
             require_once $filename;

@@ -24,7 +24,7 @@ class Rock_Core_ViewLoader
 
     private function __construct()
     {
-        self::$pathRock = dirname(dirname(__FILE__)) . '/';
+        self::$pathRock = dirname(dirname(dirname(__FILE__))) . '/';
     }
 
     private static function isSsl()
