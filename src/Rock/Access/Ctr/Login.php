@@ -1,6 +1,6 @@
 <?php
 
-class Access_Ctr_Login implements Rock_Core_IController
+class Rock_Access_Ctr_Login implements Rock_Core_IController
 {
 
     private $vwErrors = array();
@@ -16,7 +16,7 @@ class Access_Ctr_Login implements Rock_Core_IController
             throw new Exception('Vendor, Controller ou Method');
         }
         $ajax = $input->getPost('ajax');
-        $modelLogin = new Access_Model_Login();
+        $modelLogin = new Rock_Access_Model_Login();
         $vwErrors = $modelLogin->getVwErrors();
         if (count($vwErrors) === 0) {
             $session->setSession('rock_access_logged', true);
@@ -26,12 +26,12 @@ class Access_Ctr_Login implements Rock_Core_IController
                 $ctr = new $ctrStr();
                 $ctr->$method();
             } else {
-                $ctrIndex = new Access_Ctr_Index();
+                $ctrIndex = new Rock_Access_Ctr_Index();
                 $ctrIndex->loginForm($vendor, $controller, $method);
             }
         } else {
             $session->setSession('rock_access_logged', false);
-            $ctrIndex = new Access_Ctr_Index();
+            $ctrIndex = new Rock_Access_Ctr_Index();
             $ctrIndex->loginForm($vendor, $controller, $method, $vwErrors);
         }
     }

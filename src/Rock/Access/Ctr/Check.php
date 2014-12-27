@@ -1,6 +1,6 @@
 <?php
 
-class Access_Ctr_Check implements Rock_Core_IController
+class Rock_Access_Ctr_Check implements Rock_Core_IController
 {
 
     public function handle()
@@ -18,7 +18,7 @@ class Access_Ctr_Check implements Rock_Core_IController
         $logged = $session->getSession('rock_access_logged');
         if (empty($logged)) {
             Rock_Core_Front::setVendor('Access');
-            $ctrIndex = new Access_Ctr_Index();
+            $ctrIndex = new Rock_Access_Ctr_Index();
             $ctrIndex->loginForm($vendor, $controller, $method);
             return false;
         }

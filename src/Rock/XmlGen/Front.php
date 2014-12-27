@@ -11,7 +11,7 @@ class XmlGen_Front extends Rock_Core_Front
         $route->setMethod($method);
         $route->setView($view);
         parent::__construct($route);
-        // if (Access_Ctr_Check::check('XmlGen', $this->getCtrStr(), $this->getMethodStr())) {
+        // if (Rock_Access_Ctr_Check::check('XmlGen', $this->getCtrStr(), $this->getMethodStr())) {
         $this->go();
         // }
     }

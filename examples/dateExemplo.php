@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 
 // date_default_timezone_set('UTC');
-require_once 'Rock/AutoLoad.php';
+require_once dirname(dirname(__FILE__)) . '/src/Rock/Core/AutoLoad.php';
 
 $format = '%e/%m/%Y %H:%M:%S';
 
@@ -14,19 +14,19 @@ $date2 = '01/03/2013 00:00:00';
 echo $date1 . "\n<br>";
 echo $date2 . "\n<br>";
 
-$dateDiff = new Datet_DateDiff(new Datet_DateObj($date1, $format), new Datet_DateObj($date2, $format));
+$dateDiff = new Rock_Datet_DateDiff(new Rock_Datet_DateObj($date1, $format), new Rock_Datet_DateObj($date2, $format));
 echo '<pre>';
 print_r($dateDiff);
 echo '</pre><hr/>';
-$dateObj = new Datet_DateObj('29/5/2014 00:30:10', '%e/%m/%Y %H:%M:%S');
-$date = new Datet_DateUtil($dateObj);
+$dateObj = new Rock_Datet_DateObj('29/5/2014 00:30:10', '%e/%m/%Y %H:%M:%S');
+$date = new Rock_Datet_DateUtil($dateObj);
 ?>
 Exemplo DateUtil
 <br />
 <br />
-$dateObj = new Datet_DateObj('29/5/2014 00:30:10','%e/%m/%Y %H:%M:%S');
+$dateObj = new Rock_Datet_DateObj('29/5/2014 00:30:10','%e/%m/%Y %H:%M:%S');
 <br />
-$date = new Datet_DateUtil($dateObj);
+$date = new Rock_Datet_DateUtil($dateObj);
 <br />
 <br />
 <table border="1">
@@ -58,8 +58,8 @@ $date = new Datet_DateUtil($dateObj);
 			<td><?php echo $date->getSumWorkingDays(7)->getDate();?></td>
 		</tr>
 		<tr>
-			<td>$date-&gt;addHoliday(new Datet_DateObj('4/6/2014'));</td>
-			<td><?php $date->addHoliday(new Datet_DateObj('4/6/2014'));?>DateUtil Object</td>
+			<td>$date-&gt;addHoliday(new Rock_Datet_DateObj('4/6/2014'));</td>
+			<td><?php $date->addHoliday(new Rock_Datet_DateObj('4/6/2014'));?>DateUtil Object</td>
 		</tr>
 		<tr>
 			<td>$date-&gt;getSumWorkingDays(7)-&gt;getDate();</td>

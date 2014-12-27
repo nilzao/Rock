@@ -1,7 +1,7 @@
 <?php
-require_once 'Rock/AutoLoad.php';
+require_once dirname(dirname(__FILE__)) . '/src/Rock/Core/AutoLoad.php';
 
-$parseadora = new Cert_Parseadora();
+$parseadora = new Rock_Cert_Parseadora();
 try {
     $cert = $parseadora->getCertificado();
 } catch (Exception $e) {

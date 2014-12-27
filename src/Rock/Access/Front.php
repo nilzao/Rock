@@ -1,6 +1,6 @@
 <?php
 
-class Access_Front extends Rock_Core_Front
+class Rock_Access_Front extends Rock_Core_Front
 {
 
     public function __construct($controller = null, $method = null, $view = null)
