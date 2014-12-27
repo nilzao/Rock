@@ -3,5 +3,5 @@
 // error_reporting(E_ALL | E_STRICT);
 require_once dirname(dirname(__FILE__)) . '/src/Rock/Core/AutoLoad.php';
 
-new Rock_RockComp_Front();
+new RockComp_Front();
 //new RockComp_Front('Index','handle','w3c');

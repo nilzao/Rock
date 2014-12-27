@@ -3,4 +3,4 @@
 // ini_set('display_errors', true);
 require_once dirname(dirname(__FILE__)) . '/src/Rock/Core/AutoLoad.php';
 
-new Rock_DbtGen_Front();
+new DbtGen_Front();
