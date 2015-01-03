@@ -20,7 +20,7 @@ class Rock_XmlGen_Ctr_Gera implements Rock_Core_IController
         $this->proj = $input->getRequest('proj');
         $this->proj = preg_replace('[^A-z0-9]', '', $this->proj);
         $this->proj = ucfirst($this->proj);
-        $this->dirOut = getcwd() . '/XmlGen/out';
+        $this->dirOut = dirname(dirname( __FILE__)).'/out';
         $this->projClassPrefix = 'Rock_Xmlt_' . $this->proj . '_';
         Rock_Fst_Deltree::cleanDir($this->dirOut);
         $this->preparaDir();
