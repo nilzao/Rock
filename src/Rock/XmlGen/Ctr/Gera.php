@@ -1,6 +1,6 @@
 <?php
 
-class XmlGen_Ctr_Gera implements Rock_Core_IController
+class Rock_XmlGen_Ctr_Gera implements Rock_Core_IController
 {
 
     private $phpClass = "<?php\n\n";
@@ -22,11 +22,11 @@ class XmlGen_Ctr_Gera implements Rock_Core_IController
         $this->proj = ucfirst($this->proj);
         $this->dirOut = getcwd() . '/XmlGen/out';
         $this->projClassPrefix = 'Rock_Xmlt_' . $this->proj . '_';
-        Fst_Deltree::cleanDir($this->dirOut);
+        Rock_Fst_Deltree::cleanDir($this->dirOut);
         $this->preparaDir();
         $arrayXml = Rock_Xmlt_XmlToArray::createArray($xml);
         $this->recursive($arrayXml);
-        new Fst_Zip($this->dirOut, $this->dirOut . '/Rock_Xmlt_' . $this->proj . '.zip');
+        new Rock_Fst_Zip($this->dirOut, $this->dirOut . '/Rock_Xmlt_' . $this->proj . '.zip');
         $vl = Rock_Core_ViewLoader::getInstance();
         $vl->load('Gera', array(
             'proj' => 'Rock_Xmlt_' . $this->proj

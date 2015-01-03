@@ -1,6 +1,6 @@
 <?php
 
-class XmlGen_Ctr_Index implements Rock_Core_IController
+class Rock_XmlGen_Ctr_Index implements Rock_Core_IController
 {
 
     public function handle()
