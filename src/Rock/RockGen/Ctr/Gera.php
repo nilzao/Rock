@@ -1,6 +1,6 @@
 <?php
 
-class RockGen_Ctr_Gera implements Rock_Core_IController
+class Rock_RockGen_Ctr_Gera implements Rock_Core_IController
 {
 
     private $dirOut = '';
@@ -11,8 +11,9 @@ class RockGen_Ctr_Gera implements Rock_Core_IController
 
     public function __construct()
     {
-        $this->dirOut = 'RockGen/out';
-        $this->dirTemplate = 'RockGen/template';
+        $file = __FILE__;
+        $this->dirOut = dirname(dirname( __FILE__)).'/out';
+        $this->dirTemplate =  dirname(dirname( __FILE__)).'/template';
     }
 
     public function handle()

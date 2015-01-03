@@ -138,7 +138,10 @@ class Rock_Core_ViewLoader
         $this->setData($data);
         $browser = $this->detectBrowser();
         $vendor = Rock_Core_Front::getVendor();
-        $filename = $pathRock . $vendor . '/view/' . $browser . '/' . $viewPath . '.php';
+        $vendor = str_replace('_', DIRECTORY_SEPARATOR, $vendor);
+        $filename = $pathRock . $vendor . DIRECTORY_SEPARATOR;
+        $filename .= 'view' . DIRECTORY_SEPARATOR . $browser;
+        $filename .= DIRECTORY_SEPARATOR . $viewPath . '.php';
         ob_start();
         if (is_file($filename)) {
             include $filename;
