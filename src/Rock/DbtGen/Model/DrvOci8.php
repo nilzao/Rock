@@ -1,6 +1,6 @@
 <?php
 
-class DbtGen_Model_DrvOci8 extends DbtGen_Model_Structure
+class Rock_DbtGen_Model_DrvOci8 extends Rock_DbtGen_Model_Structure
 {
 
     private static $conn = null;
@@ -10,7 +10,7 @@ class DbtGen_Model_DrvOci8 extends DbtGen_Model_Structure
     /**
      * Retorna tabelas
      *
-     * @return DbtGen_Model_Table[]
+     * @return Rock_DbtGen_Model_Table[]
      */
     public function getTables()
     {
@@ -18,7 +18,7 @@ class DbtGen_Model_DrvOci8 extends DbtGen_Model_Structure
         $this->tablesRs();
         while (($obj = oci_fetch_object($this->stmt)) != false) {
             $pkFields = $this->getPkFields($obj->TABLE_NAME);
-            $tblTmp = new DbtGen_Model_Table($this->dbproj, $obj->TABLE_NAME, $pkFields);
+            $tblTmp = new Rock_DbtGen_Model_Table($this->dbproj, $obj->TABLE_NAME, $pkFields);
             $this->setTableFields($tblTmp);
             $tables[] = $tblTmp;
         }
@@ -81,9 +81,9 @@ class DbtGen_Model_DrvOci8 extends DbtGen_Model_Structure
 
     /**
      *
-     * @param DbtGen_Model_Table $table            
+     * @param Rock_DbtGen_Model_Table $table            
      */
-    private function setTableFields(DbtGen_Model_Table $table)
+    private function setTableFields(Rock_DbtGen_Model_Table $table)
     {
         $this->connect();
         $query = "SELECT column_name
@@ -92,7 +92,7 @@ class DbtGen_Model_DrvOci8 extends DbtGen_Model_Structure
         $stmt = oci_parse(self::$conn, $query);
         oci_execute($stmt);
         while (($obj = oci_fetch_object($stmt)) != false) {
-            $fieldTmp = new DbtGen_Model_Field($obj->COLUMN_NAME);
+            $fieldTmp = new Rock_DbtGen_Model_Field($obj->COLUMN_NAME);
             $table->addField($fieldTmp);
         }
         oci_free_statement($stmt);

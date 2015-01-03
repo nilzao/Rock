@@ -1,6 +1,6 @@
 <?php
 
-class DbtGen_Model_DrvPgSql extends DbtGen_Model_Structure
+class Rock_DbtGen_Model_DrvPgSql extends Rock_DbtGen_Model_Structure
 {
 
     private static $conn = null;
@@ -8,7 +8,7 @@ class DbtGen_Model_DrvPgSql extends DbtGen_Model_Structure
     /**
      * Retorna tabelas
      *
-     * @return DbtGen_Model_Table[]
+     * @return Rock_DbtGen_Model_Table[]
      */
     public function getTables()
     {
@@ -16,7 +16,7 @@ class DbtGen_Model_DrvPgSql extends DbtGen_Model_Structure
         $rs = $this->tablesRs();
         while ($obj = pg_fetch_object($rs)) {
             $pkFields = $this->getPkFields($obj->table_name);
-            $tblTmp = new DbtGen_Model_Table($this->dbproj, $obj->table_name, $pkFields);
+            $tblTmp = new Rock_DbtGen_Model_Table($this->dbproj, $obj->table_name, $pkFields);
             $this->setTableFields($tblTmp);
             $tables[] = $tblTmp;
         }
@@ -87,16 +87,16 @@ class DbtGen_Model_DrvPgSql extends DbtGen_Model_Structure
 
     /**
      *
-     * @param DbtGen_Model_Table $table            
+     * @param Rock_DbtGen_Model_Table $table            
      */
-    private function setTableFields(DbtGen_Model_Table $table)
+    private function setTableFields(Rock_DbtGen_Model_Table $table)
     {
         $this->connect();
         $query = "SELECT column_name FROM 
             information_schema.columns WHERE table_name ='" . $table->getTableName() . "'";
         $rs = pg_query(self::$conn, $query);
         while ($obj = pg_fetch_object($rs)) {
-            $fieldTmp = new DbtGen_Model_Field($obj->column_name);
+            $fieldTmp = new Rock_DbtGen_Model_Field($obj->column_name);
             $table->addField($fieldTmp);
         }
     }

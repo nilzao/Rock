@@ -1,6 +1,6 @@
 <?php
 
-class DbtGen_Model_Table
+class Rock_DbtGen_Model_Table
 {
 
     private $dbName;
@@ -15,7 +15,7 @@ class DbtGen_Model_Table
 
     /**
      *
-     * @var DbtGen_Model_Field[]
+     * @var Rock_DbtGen_Model_Field[]
      */
     private $fields = array();
 
@@ -40,14 +40,14 @@ class DbtGen_Model_Table
     /**
      * Retorna campos da tabela
      *
-     * @return DbtGen_Model_Field[]
+     * @return Rock_DbtGen_Model_Field[]
      */
     public function getFields()
     {
         return $this->fields;
     }
 
-    public function addField(DbtGen_Model_Field $field)
+    public function addField(Rock_DbtGen_Model_Field $field)
     {
         array_push($this->fields, $field);
         if (in_array($field->getName(), $this->pkFields)) {

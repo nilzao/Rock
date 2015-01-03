@@ -1,6 +1,6 @@
 <?php
 
-class DbtGen_Model_DrvMsSql extends DbtGen_Model_Structure
+class Rock_DbtGen_Model_DrvMsSql extends Rock_DbtGen_Model_Structure
 {
 
     private static $conn = null;
@@ -8,7 +8,7 @@ class DbtGen_Model_DrvMsSql extends DbtGen_Model_Structure
     /**
      * Retorna tabelas
      *
-     * @return DbtGen_Model_Table[]
+     * @return Rock_DbtGen_Model_Table[]
      */
     public function getTables()
     {
@@ -17,7 +17,7 @@ class DbtGen_Model_DrvMsSql extends DbtGen_Model_Structure
         while ($obj = mssql_fetch_object($rs)) {
             $tableName = $obj->TABLE_SCHEMA . '.' . $obj->TABLE_NAME;
             $pkFields = $this->getPkFields($tableName);
-            $tblTmp = new DbtGen_Model_Table($this->dbproj, $tableName, $pkFields);
+            $tblTmp = new Rock_DbtGen_Model_Table($this->dbproj, $tableName, $pkFields);
             $this->setTableFields($tblTmp);
             $tables[] = $tblTmp;
         }
@@ -80,9 +80,9 @@ class DbtGen_Model_DrvMsSql extends DbtGen_Model_Structure
 
     /**
      *
-     * @param DbtGen_Model_Table $table            
+     * @param Rock_DbtGen_Model_Table $table            
      */
-    private function setTableFields(DbtGen_Model_Table $table)
+    private function setTableFields(Rock_DbtGen_Model_Table $table)
     {
         $tableSchema = explode('.', $table->getTableName());
         $schema = $tableSchema[0];
@@ -95,7 +95,7 @@ class DbtGen_Model_DrvMsSql extends DbtGen_Model_Structure
 				TABLE_NAME='$tableName'";
         $rs = mssql_query($query, self::$conn);
         while ($obj = mssql_fetch_object($rs)) {
-            $fieldTmp = new DbtGen_Model_Field($obj->COLUMN_NAME);
+            $fieldTmp = new Rock_DbtGen_Model_Field($obj->COLUMN_NAME);
             $table->addField($fieldTmp);
         }
     }

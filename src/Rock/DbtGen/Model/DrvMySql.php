@@ -1,6 +1,6 @@
 <?php
 
-class DbtGen_Model_DrvSqlite extends DbtGen_Model_Structure
+class Rock_DbtGen_Model_DrvMySql extends Rock_DbtGen_Model_Structure
 {
 
     private static $conn = null;
@@ -8,16 +8,16 @@ class DbtGen_Model_DrvSqlite extends DbtGen_Model_Structure
     /**
      * Retorna tabelas
      *
-     * @return DbtGen_Model_Table[]
+     * @return Rock_DbtGen_Model_Table[]
      */
     public function getTables()
     {
         $tables = array();
         $rs = $this->tablesRs();
-        while ($obj = $rs->fetch(PDO::FETCH_OBJ)) {
-            $tableName = $obj->tbl_name;
+        while ($arrTbl = $rs->fetch(PDO::FETCH_NUM)) {
+            $tableName = $arrTbl[0];
             $pkFields = $this->getPkFields($tableName);
-            $tblTmp = new DbtGen_Model_Table($this->dbproj, $tableName, $pkFields);
+            $tblTmp = new Rock_DbtGen_Model_Table($this->dbproj, $tableName, $pkFields);
             $this->setTableFields($tblTmp);
             $tables[] = $tblTmp;
         }
@@ -26,14 +26,16 @@ class DbtGen_Model_DrvSqlite extends DbtGen_Model_Structure
 
     public function __construct()
     {
-        $this->driver = 'pdo_sqlite';
+        $this->driver = 'mysqli';
     }
 
     private function connect()
     {
         if (self::$conn === null) {
-            $connectionString = 'sqlite:' . $this->db;
-            self::$conn = new PDO($connectionString, null, null);
+            $connectionString = 'mysql:host=' . $this->host . ';';
+            $connectionString .= 'dbname=' . $this->db . ';';
+            $connectionString .= 'charset=utf8';
+            self::$conn = new PDO($connectionString, $this->user, $this->passwd);
             self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
     }
@@ -46,12 +48,12 @@ class DbtGen_Model_DrvSqlite extends DbtGen_Model_Structure
     private function getPkFields($table)
     {
         $this->connect();
-        $query = "PRAGMA table_info($table)";
+        $query = "SHOW FIELDS FROM $table";
         $rs = self::$conn->query($query);
         $pkFields = array();
         while ($obj = $rs->fetch(PDO::FETCH_OBJ)) {
-            if ($obj->pk == 1) {
-                $pkFields[] = $obj->name;
+            if ($obj->Key == 'PRI') {
+                $pkFields[] = $obj->Field;
             }
         }
         return $pkFields;
@@ -64,40 +66,23 @@ class DbtGen_Model_DrvSqlite extends DbtGen_Model_Structure
     private function tablesRs()
     {
         $this->connect();
-        $query = "SELECT name,tbl_name 
-			FROM sqlite_master 
-			WHERE type = 'table' and tbl_name != 'sqlite_sequence'";
+        $query = "SHOW TABLES";
         return self::$conn->query($query);
     }
 
     /**
      *
-     * @param DbtGen_Model_Table $table            
+     * @param Rock_DbtGen_Model_Table $table            
      */
-    private function setTableFields(DbtGen_Model_Table $table)
+    private function setTableFields(Rock_DbtGen_Model_Table $table)
     {
         $this->connect();
-        $query = 'PRAGMA table_info(' . $table->getTableName() . ')';
+        $query = 'SHOW FIELDS FROM ' . $table->getTableName();
         $rs = self::$conn->query($query);
         while ($obj = $rs->fetch(PDO::FETCH_OBJ)) {
-            $fieldTmp = new DbtGen_Model_Field($obj->name);
+            $fieldTmp = new Rock_DbtGen_Model_Field($obj->Field);
             $table->addField($fieldTmp);
         }
-    }
-
-    public function getHost()
-    {
-        return '';
-    }
-
-    public function getUser()
-    {
-        return '';
-    }
-
-    public function getPasswd()
-    {
-        return '';
     }
 
     public function getDsn()

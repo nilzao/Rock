@@ -1,6 +1,6 @@
 <?php
 
-abstract class DbtGen_Model_Structure
+abstract class Rock_DbtGen_Model_Structure
 {
 
     protected $driver;
@@ -20,7 +20,7 @@ abstract class DbtGen_Model_Structure
     /**
      * Retorna tabelas disponíveis no banco de dados
      *
-     * @return DbtGen_Model_Table[]
+     * @return Rock_DbtGen_Model_Table[]
      */
     public abstract function getTables();
 

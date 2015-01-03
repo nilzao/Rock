@@ -1,6 +1,6 @@
 <?php
 
-class DbtGen_Ctr_Gera implements Rock_Core_IController
+class Rock_DbtGen_Ctr_Gera implements Rock_Core_IController
 {
 
     private $dirOut = '';
@@ -11,14 +11,14 @@ class DbtGen_Ctr_Gera implements Rock_Core_IController
 
     public function __construct()
     {
-        $this->dirOut = 'DbtGen/out';
-        $this->dirTemplate = 'DbtGen/template';
+        $this->dirOut = dirname(dirname( __FILE__)).'/out';
+        $this->dirTemplate =  dirname(dirname( __FILE__)).'/template';
     }
 
     public function handle()
     {
         $input = Rock_Core_Input::getInstance();
-        $db = DbtGen_Model_Driver::getDb($input->getRequest('driver'));
+        $db = Rock_DbtGen_Model_Driver::getDb($input->getRequest('driver'));
         $db->setHost($input->getRequest('host'));
         $db->setDb($input->getRequest('db'));
         $db->setUser($input->getRequest('user'));
@@ -50,7 +50,7 @@ class DbtGen_Ctr_Gera implements Rock_Core_IController
         }
     }
 
-    private function prepareDir(DbtGen_Model_Structure $db)
+    private function prepareDir(Rock_DbtGen_Model_Structure $db)
     {
         Rock_Fst_Deltree::cleanDir($this->dirOut . '/');
         $dbProj = ucfirst($this->snakeToCamel($db->getDbproj()));
@@ -59,7 +59,7 @@ class DbtGen_Ctr_Gera implements Rock_Core_IController
         $this->createDir($path . '/Ent/Gen');
     }
 
-    private function writeDbConn(DbtGen_Model_Structure $db)
+    private function writeDbConn(Rock_DbtGen_Model_Structure $db)
     {
         $dbProj = ucfirst($this->snakeToCamel($db->getDbproj()));
         $strFile = file_get_contents($this->dirTemplate . '/' . 'Dbname/DbConnect.php');
@@ -71,7 +71,7 @@ class DbtGen_Ctr_Gera implements Rock_Core_IController
         file_put_contents($fileName, $strFile);
     }
 
-    private function writeDao(DbtGen_Model_Table $table)
+    private function writeDao(Rock_DbtGen_Model_Table $table)
     {
         $dbProj = ucfirst($this->snakeToCamel($table->getDbName()));
         $strFile = file_get_contents($this->dirTemplate . '/' . '/Dbname/Dao/Gen/template.php');
@@ -107,7 +107,7 @@ class DbtGen_Ctr_Gera implements Rock_Core_IController
         return $camelName;
     }
 
-    private function getStrProperties(DbtGen_Model_Table $table)
+    private function getStrProperties(Rock_DbtGen_Model_Table $table)
     {
         $fields = $table->getFields();
         $fieldsStr = '';
@@ -117,7 +117,7 @@ class DbtGen_Ctr_Gera implements Rock_Core_IController
         return $fieldsStr;
     }
 
-    private function getStrPks(DbtGen_Model_Table $table)
+    private function getStrPks(Rock_DbtGen_Model_Table $table)
     {
         $strPk = '';
         if (count($table->getPkFields()) > 0) {
@@ -128,7 +128,7 @@ class DbtGen_Ctr_Gera implements Rock_Core_IController
         return $strPk;
     }
 
-    private function getStrMethods(DbtGen_Model_Table $table)
+    private function getStrMethods(Rock_DbtGen_Model_Table $table)
     {
         $fields = $table->getFields();
         $methodsStr = '';
@@ -149,7 +149,7 @@ class DbtGen_Ctr_Gera implements Rock_Core_IController
         return $methodsStr;
     }
 
-    private function writeEntity(DbtGen_Model_Table $table)
+    private function writeEntity(Rock_DbtGen_Model_Table $table)
     {
         $dbProj = ucfirst($this->snakeToCamel($table->getDbName()));
         $strFile = file_get_contents($this->dirTemplate . '/Dbname/Ent/Gen/template.php');

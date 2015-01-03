@@ -1,6 +1,6 @@
 <?php
 
-class DbtGen_Model_Field
+class Rock_DbtGen_Model_Field
 {
 
     private $name;

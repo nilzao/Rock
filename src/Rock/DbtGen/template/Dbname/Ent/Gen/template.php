@@ -1,6 +1,6 @@
 <?php
 
-abstract class Dbt_DBGROUP_Ent_Gen_TABLENAMECLASS extends Dbt_EntityBase
+abstract class Rock_Dbt_DBGROUP_Ent_Gen_TABLENAMECLASS extends Rock_Dbt_EntityBase
 {
 
 // PROPERTIES

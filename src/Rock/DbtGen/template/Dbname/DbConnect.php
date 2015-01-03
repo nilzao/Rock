@@ -1,11 +1,11 @@
 <?php
 
-class Dbt_DBGROUP_DbConnect
+class Rock_Dbt_DBGROUP_DbConnect
 {
 
     /**
      *
-     * @var DbAl_Iface_IConn
+     * @var Rock_DbAl_Iface_IConn
      */
     private static $conn;
 
@@ -19,14 +19,14 @@ class Dbt_DBGROUP_DbConnect
             $dbuser = 'DBUSER';
             $dbpassword = 'DBPASSWD';
             $dsn = 'DSN';
-            $conn = new DbAl_Conn($dsn, $dbuser, $dbpassword);
+            $conn = new Rock_DbAl_Conn($dsn, $dbuser, $dbpassword);
             self::$conn = $conn->getConnection();
         }
     }
 
     /**
      *
-     * @return DbAl_Iface_IConn
+     * @return Rock_DbAl_Iface_IConn
      */
     public static function getDataBase()
     {

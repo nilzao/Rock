@@ -1,6 +1,6 @@
 <?php
 
-class DbtGen_Model_DrvFb extends DbtGen_Model_Structure
+class Rock_DbtGen_Model_DrvFb extends Rock_DbtGen_Model_Structure
 {
 
     private static $conn = null;
@@ -8,7 +8,7 @@ class DbtGen_Model_DrvFb extends DbtGen_Model_Structure
     /**
      * Retorna tabelas
      *
-     * @return DbtGen_Model_Table[]
+     * @return Rock_DbtGen_Model_Table[]
      */
     public function getTables()
     {
@@ -17,7 +17,7 @@ class DbtGen_Model_DrvFb extends DbtGen_Model_Structure
         while ($arrTbl = $rs->fetch(PDO::FETCH_NUM)) {
             $tableName = trim($arrTbl[0]);
             $pkFields = $this->getPkFields($tableName);
-            $tblTmp = new DbtGen_Model_Table($this->dbproj, $tableName, $pkFields);
+            $tblTmp = new Rock_DbtGen_Model_Table($this->dbproj, $tableName, $pkFields);
             $this->setTableFields($tblTmp);
             $tables[] = $tblTmp;
         }
@@ -82,16 +82,16 @@ class DbtGen_Model_DrvFb extends DbtGen_Model_Structure
 
     /**
      *
-     * @param DbtGen_Model_Table $table            
+     * @param Rock_DbtGen_Model_Table $table            
      */
-    private function setTableFields(DbtGen_Model_Table $table)
+    private function setTableFields(Rock_DbtGen_Model_Table $table)
     {
         $this->connect();
         $query = 'select rdb$field_name as FIELD FROM rdb$relation_fields
             where rdb$relation_name=\'' . $table->getTableName() . '\'';
         $rs = self::$conn->query($query);
         while ($obj = $rs->fetch(PDO::FETCH_OBJ)) {
-            $fieldTmp = new DbtGen_Model_Field(trim($obj->FIELD));
+            $fieldTmp = new Rock_DbtGen_Model_Field(trim($obj->FIELD));
             $table->addField($fieldTmp);
         }
     }

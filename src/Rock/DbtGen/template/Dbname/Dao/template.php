@@ -1,6 +1,6 @@
 <?php
 
-class Dbt_DBGROUP_Dao_TABLENAMECLASS extends Dbt_DBGROUP_Dao_Gen_TABLENAMECLASS
+class Rock_Dbt_DBGROUP_Dao_TABLENAMECLASS extends Rock_Dbt_DBGROUP_Dao_Gen_TABLENAMECLASS
 {
 
     protected static $instance;

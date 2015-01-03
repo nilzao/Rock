@@ -11,7 +11,6 @@ class Rock_RockGen_Ctr_Gera implements Rock_Core_IController
 
     public function __construct()
     {
-        $file = __FILE__;
         $this->dirOut = dirname(dirname( __FILE__)).'/out';
         $this->dirTemplate =  dirname(dirname( __FILE__)).'/template';
     }
