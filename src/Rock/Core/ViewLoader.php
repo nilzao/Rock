@@ -23,9 +23,7 @@ class Rock_Core_ViewLoader
     }
 
     private function __construct()
-    {
-        self::$pathRock = dirname(dirname(dirname(__FILE__))) . '/';
-    }
+    {}
 
     private static function isSsl()
     {
@@ -101,6 +99,7 @@ class Rock_Core_ViewLoader
 
     public static function getPathRock()
     {
+        self::$pathRock = dirname(dirname(dirname(__FILE__))) . '/';
         return self::$pathRock;
     }
 
@@ -118,8 +117,10 @@ class Rock_Core_ViewLoader
 
     public static function checkDir($browser = 'w3c')
     {
+        $pathRock = self::getPathRock();
         $vendor = Rock_Core_Front::getVendor();
-        $dirName = $vendor . '/view/' . $browser;
+        $vendor = str_replace('_', DIRECTORY_SEPARATOR, $vendor);
+        $dirName = $pathRock . $vendor . '/view/' . $browser;
         return is_dir($dirName);
     }
 
