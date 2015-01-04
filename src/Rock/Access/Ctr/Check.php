@@ -17,7 +17,7 @@ class Rock_Access_Ctr_Check implements Rock_Core_IController
         // $email = $session->getSession('rock_access_email');
         $logged = $session->getSession('rock_access_logged');
         if (empty($logged)) {
-            Rock_Core_Front::setVendor('Access');
+            Rock_Core_Front::setVendor('Rock_Access');
             $ctrIndex = new Rock_Access_Ctr_Index();
             $ctrIndex->loginForm($vendor, $controller, $method);
             return false;
