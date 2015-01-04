@@ -7,7 +7,7 @@ class Access_Model_Login
 
     public function __construct()
     {
-        $daoUser = Dbt_Access_Dao_RockUsers::getInstance();
+        $daoUser = Access_Dbt_Dao_RockUsers::getInstance();
         $input = Rock_Core_Input::getInstance();
         $email = $input->getPost('email');
         $user = $daoUser->getByEmail($email);
@@ -17,7 +17,7 @@ class Access_Model_Login
         $this->checkPasswd($user, $passwd);
     }
 
-    private function checkActive(Dbt_Access_Ent_RockUsers $user)
+    private function checkActive(Access_Dbt_Ent_RockUsers $user)
     {
         $active = $user->getActive();
         if (! empty($active)) {
@@ -27,7 +27,7 @@ class Access_Model_Login
         return false;
     }
 
-    private function checkEmail(Dbt_Access_Ent_RockUsers $user, $email)
+    private function checkEmail(Access_Dbt_Ent_RockUsers $user, $email)
     {
         $userMail = $user->getEmail();
         if (! empty($userMail) && $userMail == $email) {
@@ -37,7 +37,7 @@ class Access_Model_Login
         return false;
     }
 
-    private function checkPasswd(Dbt_Access_Ent_RockUsers $user, $passwd)
+    private function checkPasswd(Access_Dbt_Ent_RockUsers $user, $passwd)
     {
         if ($user->getPasswd() == $this->crypt($passwd)) {
             return true;
