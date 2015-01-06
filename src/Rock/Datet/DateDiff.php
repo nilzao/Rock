@@ -2,6 +2,7 @@
 
 class Rock_Datet_DateDiff
 {
+
     private $years = 0;
 
     private $months = 0;
@@ -40,9 +41,15 @@ class Rock_Datet_DateDiff
             $this->calcDiffYears();
             $mesIni = $this->dateIni->getDate('%m');
             $mesFim = $this->dateEnd->getDate('%m');
-            $months = $mesFim - $mesIni;
+            if ($mesFim > $mesIni) {
+                $months = $mesFim - $mesIni;
+            } else {
+                $months = $mesIni - $mesFim;
+            }
             if ($this->years > 0) {
                 $months = $this->years * 12 + $months;
+            } else {
+                $months = 12 - $months;
             }
             $this->months = $months;
             $dateUtil = new Rock_Datet_DateUtil($this->dateIni);
